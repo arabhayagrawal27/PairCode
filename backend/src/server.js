@@ -3,10 +3,18 @@ import { ENV } from "./lib/env.js"
 import { connect } from "mongoose";
 import { connectDB } from "./lib/db.js";
 import dns from "dns"
+import cors from "cors"
+import {serve } from "inngest/express"
+import { inngest } from "./lib/inngest.js";
 
 dns.setServers(["1.1.1.1","8.8.8.8"])
 
 const app = express();
+
+
+app.use(express.json())
+app.use(cors({origin:ENV.CLIENT_URL,credentials:true}))
+app.use("/api/inngest",serve({client: inngest, functions}))
 
 console.log(ENV.PORT);
 

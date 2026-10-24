@@ -21,7 +21,11 @@ const syncUser = inngest.createFunction(
             profileImage: image_url
         }
 
-        await User.create(newUser)
+        await User.findOneAndUpdate(
+      { clerkId: id },
+      newUser,
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
   
 
     await upsertStreamUser({

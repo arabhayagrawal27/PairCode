@@ -13,9 +13,19 @@ dns.setServers(["1.1.1.1","8.8.8.8"])
 
 const app = express();
 
+
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
+}));
+
+
+
 app.use(clerkMiddleware());
 app.use(express.json())
-app.use(cors({origin:ENV.CLIENT_URL,credentials:true}))
+
 app.use("/api/inngest",serve({client: inngest, functions}))
 app.use("/api/chat", chatRoutes);
 app.use("/api/sessions", sessionRoutes);

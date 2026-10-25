@@ -13,14 +13,16 @@ dns.setServers(["1.1.1.1","8.8.8.8"])
 
 const app = express();
 
-
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",
+    "https://paircode-frontend.onrender.com",
+    ENV.CLIENT_URL
+  ].filter(Boolean),
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
 }));
-
 
 
 app.use(clerkMiddleware());
